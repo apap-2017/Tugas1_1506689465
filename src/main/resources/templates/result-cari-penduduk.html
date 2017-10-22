@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Lihat Penduduk</title>
+        <script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/bootstrap-select.min.js"></script>
+		<script src="/js/datatables.min.js"></script>
+		<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/datatables.min.css"/>
+		<link rel="stylesheet" href="/css/style.css"/>
+    </head>
+    <body>
+	    <nav class="navbar navbar-inverse">
+		  <div class="container-fluid">
+		    <div class="navbar-header">
+		      <a class="navbar-brand" href="/">SI Kependudukan</a>
+		    </div>
+		    <ul class="nav navbar-nav">
+		      <li><a href="/">Home</a></li>
+		      <li><a href="/penduduk/tambah">Tambah Penduduk</a></li>
+		      <li><a href="/keluarga/tambah">Tambah Keluarga</a></li>
+		      <li class="active"><a href="/penduduk/cari">Cari Data</a></li>
+		    </ul>
+		  </div>
+		  </nav>
+    	<div class="container">
+    	
+    	
+    		<div>
+			  	<h4 th:text="'Lihat Data Penduduk Di ' + ${kot.nama_kota} + ', Kecamatan ' + ${kec.nama_kecamatan} + ', Kelurahan ' +  ${kel.nama_kelurahan} ">Lihat Data Penduduk</h4>
+				<hr/>
+			</div>
+			 <div class="row">
+    <div class="col-sm-4" style="text-align:left;size:200px;">
+    		<h1>Penduduk dengan Usia Tetua</h1>
+    		<div class="col-sm-4" style="text-align:left;">
+    		<h3>NIK</h3>
+    		<h3>Nama</h3>
+    		
+    		<h3>Tanggal Lahir</h3>
+    		</div>
+    		<div class="col-sm-8" style="text-align:left;">
+	       	<h3 th:text="${old.nik}"></h3>
+			<h3 th:text="${old.nama}" ></h3>
+	       	<h3 th:text="${old.tanggal_lahir}"></h3>
+	       	</div>
+	</div>
+    <div class="col-sm-8" style="text-align:left;">
+   			<h1>Penduduk dengan Usia Termuda</h1>
+   			<div class="col-sm-4" style="text-align:left;">
+    		<h3>NIK</h3>
+    		<h3>Nama</h3>
+    		<h3>Tanggal Lahir</h3>
+    		</div>
+    		<div class="col-sm-8" style="text-align:left;">
+	       	<h3 th:text="${young.nik}"></h3>
+			<h3 th:text="${young.nama}" ></h3>
+	       	<h3 th:text="${young.tanggal_lahir}"></h3>
+	       	</div>
+    </div>
+    </div>
+    <hr/>
+    		
+			<br/>
+    		<table class="table">
+			    <thead>
+			     <tr>
+				    <th> NIK</th>
+				    <th> Nama </th>
+				    <th> Jenis Kelamin </th>
+			     </tr>
+			    </thead>
+			    <tbody>
+				    <tr th:each = "penduduk: ${listPenduduk}">
+					    <td th:text= "${penduduk.nik}"></td>
+					    <td th:text= "${penduduk.nama}"></td>
+					    <td><h3 th:text="${penduduk.jenis_kelamin} == 0 ? 'Laki-laki' : 'Perempuan'"></h3></td>
+					  
+			   	 	</tr>
+			    </tbody>
+		    </table>
+    	</div>
+    </body>
+    <script>
+		$( document ).ready(function() { 
+			$('.table').DataTable();
+		});
+	</script>
+ </html>

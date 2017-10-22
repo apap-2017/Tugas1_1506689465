@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>Ubah Keluarga</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/css/style.css"/>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/">SI Kependudukan</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="/">Home</a></li>
+	      <li class="active"><a href="/penduduk/tambah">Tambah Penduduk</a></li>
+	      <li><a href="/keluarga/tambah">Tambah Keluarga</a></li>
+	      <li><a href="/penduduk/cari">Cari Data</a></li>
+	    </ul>
+	  </div>
+</nav>
+
+<div class="container">
+	<h1 class="page-header">Ubah Keluarga</h1>
+
+	<form th:action="'/keluarga/ubah/'+ ${nomor_kk}" method="post" th:object="${keluarga}" >
+		<input type="hidden" name="id"  th:field="*{id}" th:value="${keluarga.id}"/>
+		<input type="hidden" name="is_tidak_berlaku"  th:field="*{is_tidak_berlaku}" th:value="${keluarga.is_tidak_berlaku}"/>
+		<div  class="row">
+			<label for="alamat">Alamat</label> <input class="form-control" type="text" name="alamat"  th:field="*{alamat}" th:value="${keluarga.alamat}"/>
+		</div>
+		<div  class="row">
+			<label for="RT">RT</label> <input class="form-control" type="text" name="RT" th:field="*{rt}" th:value="${keluarga.rt}" />
+		</div>
+		<div  class="row">
+			<label for="RW">RW</label> <input class="form-control" type="text" name="RW" th:field="*{rw}" th:value="${keluarga.rw}"/>
+		</div>
+		<div  class="row">
+			<label for="kelurahan">Kelurahan/Desa</label> 
+			<select name="kelurahan"  class="form-control" th:field="*{id_kelurahan}" th:value="${keluarga.id_kelurahan}" id="kelurahan">
+				<option th:each="kelurahan : ${kelurahans}" th:value="${kelurahan.id}" selected="${kelurahan.id.equals(keluarga.id_kelurahan) ? 'true' : 'false'}" th:text="${kelurahan.nama_kelurahan}"></option>
+			</select>
+		</div>
+		<div  class="row">
+			<label for="kecamatan">Kecamatan</label> <input class="form-control" type="text" name="kecamatan" id="kecamatan" readonly="readonly"/>
+		</div>
+		<div  class="row">
+			<label for="kota">Kota</label> <input class="form-control" type="text" name="kota" id="kota" readonly="readonly"/>
+		</div>
+
+		<div  class="row">
+			<button class="btn btn-primary" type="submit" name="action" value="save">Save</button>
+		</div>
+	</form>
+	</div>
+</body>
+<script type="text/javascript" th:inline="javascript">
+	$( document ).ready(function() {
+		var allKota = [[(${allKota})]];
+		var allKecamatan = [[(${allKecamatan})]];
+		var allKelurahan = [[(${kelurahans})]];
+		
+		$('#kelurahan').on('change', function() {
+			var idKelurahan = this.value;
+			allKelurahan.forEach(function(kelurahan) {
+				if(kelurahan.id == idKelurahan) {
+					allKecamatan.forEach(function(kecamatan) {
+						if(kecamatan.id == kelurahan.id_kecamatan) {
+							$('#kecamatan').val(kecamatan.nama_kecamatan);
+							allKota.forEach(function(kota) {
+								if(kota.id == kecamatan.id_kota) {
+									$('#kota').val(kota.nama_kota);
+									return;
+								}
+							});
+							return;
+						}
+					});
+					return;
+				}
+			});
+		});
+
+		$("#kelurahan").trigger('change');
+	});
+</script>
+</html>

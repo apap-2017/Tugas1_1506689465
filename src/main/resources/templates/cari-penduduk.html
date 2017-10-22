@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Lihat Penduduk</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap-select.min.js"></script>
+	<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="/css/bootstrap-select.min.css"/>
+	<link rel="stylesheet" href="/css/style.css"/>
+</head>
+<body>
+<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="/">SI Kependudukan</a>
+	    </div>
+	    <ul class="nav navbar-nav">
+	      <li><a href="/">Home</a></li>
+	      <li><a href="/penduduk/tambah">Tambah Penduduk</a></li>
+	      <li><a href="/keluarga/tambah">Tambah Keluarga</a></li>
+	      <li class="active"><a href="/penduduk/cari">Cari Data</a></li>
+	    </ul>
+	  </div>
+</nav>
+<div class="container">
+	<h1 class="page-header">Cari Penduduk</h1>
+	<form action ="/penduduk/cari" class="form-horizontal">
+		<div class="row">
+			<div class="col-sm-5" th:if="${selectedCity == null}">
+				<select class="form-control selectpicker" data-live-search="true" name="kt" required="required">
+					<option value="">SILAHKAN PILIH KOTA/KABUPATEN</option>
+					<option th:each="city : ${cities}" th:value="${city.id}" th:text="${city.nama_kota}">Nama Kota</option>
+				</select>
+	 		</div>
+	 		<div class="col-sm-5" th:if="${selectedCity != null}">
+	 			<input class="form-control" type= "text" th:value="${selectedCity.nama_kota}" readonly="readonly"/>
+	 			<input class="form-control" type= "hidden" th:value="${selectedCity.id}" name="kt" />
+	 		</div>
+	 		<br/>
+		</div>
+ 		<div th:if="${selectedDistrict != null || districts != null}" class="row">
+	 		<div class="col-sm-5" th:if="${selectedDistrict == null}">
+	  			<select class="form-control selectpicker" data-live-search="true" name="kc" required="required">
+	  				<option value="">SILAHKAN PILIH KECAMATAN</option>
+	  				<option th:each="district : ${districts}" th:value="${district.id}" th:text="${district.nama_kecamatan}">Nama Kecamatan</option>
+				</select>
+	  		</div>
+	  		<div class="col-sm-5" th:if="${selectedDistrict != null}">
+	  			<input class="form-control" type= "text" th:value="${selectedDistrict.nama_kecamatan}" readonly="readonly"/>
+	 				<input class="form-control" type= "hidden" th:value="${selectedDistrict.id}" name="kc" />
+	  		</div>
+	  		<br/>
+ 		</div>
+ 		<div th:if ="${selectedVillage != null || villages !=null}" class="row">
+	 		<div class="col-sm-5" th:if="${selectedVillage == null}">
+				<select class="form-control selectpicker" data-live-search="true" name="kl" required="required">
+					  <option value="">SILAHKAN PILIH KELURAHAN</option>
+					  <option th:each="village : ${villages}" th:value="${village.id}" th:text="${village.nama_kelurahan}">Nama Kelurahan</option>
+				</select>
+			</div>
+			<div class="col-sm-5" th:if="${selectedVillage != null}">
+				<input class="form-control" type= "text" th:value="${selectedVillage.nama_kelurahan}" readonly="readonly"/>
+				<input class="form-control" type= "hidden" th:value="${selectedVillage.id}" name="kl" />
+			</div>	
+			<br/>	
+		</div>
+		<div>
+			<button class="btn btn-primary" type ="submit">Cari</button>	
+		</div>
+	</form>
+</div>
+ 		
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Penduduk</title>
+        <script src="/js/jquery.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
+		<script src="/js/bootstrap-select.min.js"></script>
+		<link rel="stylesheet" href="/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="/css/bootstrap-select.min.css"/>
+		<link rel="stylesheet" href="/css/style.css"/>
+    </head>
+    <body>
+    	 <nav class="navbar navbar-inverse">
+			  <div class="container-fluid">
+			    <div class="navbar-header">
+			      <a class="navbar-brand" href="/">SI Kependudukan</a>
+			    </div>
+			    <ul class="nav navbar-nav">
+			      <li class="active"><a href="/">Home</a></li>
+			      <li><a href="/penduduk/tambah">Tambah Penduduk</a></li>
+			      <li ><a href="/keluarga/tambah">Tambah Keluarga</a></li>
+			      <li><a href="/penduduk/cari">Cari Data</a></li>
+			    </ul>
+			  </div>
+		</nav>
+    	<div class="container">
+    	<center>
+    		<h1 class="page-header"  th:text="'Lihat Data Penduduk - ' + ${penduduk.nik}">Lihat Data Penduduk</h1>
+    		
+    		 <div class="row">
+    <div class="col-sm-4" style="text-align:left;">
+<h3>Nama</h3>
+<h3>Tempat/Tanggal Lahir</h3>
+<h3>Alamat</h3>
+<h3>RT/RW</h3>
+<h3>Kelurahan/Desa</h3>
+<h3>Kecamatan</h3>
+<h3>Kota</h3>
+<h3>Golongan Darah</h3>
+<h3>Agama</h3>
+<h3>Status Perkawinan</h3>
+<h3>Pekerjaan</h3>
+<h3>Kewargenagaraan</h3>
+<h3>Status Kematian</h3>
+</div>
+    <div class="col-sm-8" style="text-align:left;">
+   		
+	       	<h3 th:text="${penduduk.nama}" >Student Name</h3>
+	       	<h3 th:text="${penduduk.tempat_lahir} + '/' + ${penduduk.tanggal_lahir} "></h3>
+	       	<h3 th:text="${keluarga.alamat}">Student GPA</h3>
+	       	<h3 th:text="${keluarga.RT} + '/' + ${keluarga.RW} " ></h3>
+	    	<h3 th:text="${kelurahan.nama_kelurahan}"></h3>
+	    	<h3 th:text="${kecamatan.nama_kecamatan}"></h3>
+	    	<h3 th:text="${kota.nama_kota}"></h3>
+	    	<h3 th:text="${penduduk.golongan_darah}"></h3>
+	    	<h3 th:text="${penduduk.agama}"></h3>
+	    	<h3 th:text="${penduduk.status_perkawinan}"></h3>
+	    	<h3 th:text="${penduduk.pekerjaan}"></h3>
+	    	<h3 th:text="${kewarganegaraan}"></h3>
+	    	<h3 th:text="${status}"></h3>
+    </div>
+  </div>
+   			
+	    	
+	   
+	    	<form action="penduduk/mati" method = "post">
+		    	<input type="hidden" name="nik" th:value="${penduduk.nik}"/>
+		    	<button type= "submit" class="btn btn-danger">Nonaktifkan</button>
+	    	</form>
+	    </center>
+    	</div>
+    </body>
+</html>
